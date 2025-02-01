@@ -7,13 +7,14 @@ services:
     restart: always
     depends_on:
       - db
-    network_mode: host
+    networks:
+      - ghost_network  # Use default bridge network
     environment:
       url: "https://34.89.34.201"
       database_client: "mysql"
       database_connection_host: "db"
-      database_connection_user: "ghost_user"  # Changed to ghost_user
-      database_connection_password: "newpassword"  # Ensure this matches the user password
+      database_connection_user: "ghost_user"
+      database_connection_password: "newpassword"
       database_connection_database: "ghost"
     volumes:
       - ghost_content:/var/lib/ghost/content
@@ -23,10 +24,10 @@ services:
     container_name: ghost_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: "YourStrongPassword"  # Root password
+      MYSQL_ROOT_PASSWORD: "YourStrongPassword"
       MYSQL_DATABASE: "ghost"
       MYSQL_USER: "ghost_user"
-      MYSQL_PASSWORD: "newpassword"  # Password for ghost_user
+      MYSQL_PASSWORD: "newpassword"
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
