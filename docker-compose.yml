@@ -11,11 +11,11 @@ services:
       - "2368:2368"
     environment:
       url: "https://34.89.34.201"
-      database__client: "mysql"
-      database__connection__host: "db"
-      database__connection__user: "ghost_user"
-      database__connection__password: "YourStrongPassword"
-      database__connection__database: "ghost"
+      database_client: "mysql"
+      database_connection_host: "db"
+      database_connection_user: "ghost_user"
+      database_connection_password: "YourStrongPassword"
+      database_connection_database: "ghost"
     volumes:
       - ghost_content:/var/lib/ghost/content
 
@@ -33,5 +33,12 @@ services:
 
 volumes:
   ghost_content:
+    external: true
+    name: ghost-docker_ghost_content
   db_data:
+    external: true
+    name: ghost-docker_db_data
 
+networks:
+  ghost_network:
+    driver: bridge
