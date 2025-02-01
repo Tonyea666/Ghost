@@ -8,8 +8,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    ports:
-      - "2368:2368"
     environment:
       url: "https://34.89.34.201"
       database_client: "mysql"
