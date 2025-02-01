@@ -4,23 +4,24 @@ services:
   ghost:
     image: ghost:latest
     container_name: ghost_app
+    restart: always
     depends_on:
       - db
+    network_mode: host  # Use host network mode
     environment:
       url: "https://34.89.34.201"
       database_client: "mysql"
-      database_connection_host: "db"
+      database_connection_host: "localhost"  # Use localhost since host networking is enabled
       database_connection_user: "ghost_user"
       database_connection_password: "newpassword"
       database_connection_database: "ghost"
     volumes:
       - ghost_content:/var/lib/ghost/content
-    networks:
-      - ghost_network
 
   db:
     image: mysql:8.0
     container_name: ghost_db
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "YourStrongPassword"
       MYSQL_DATABASE: "ghost"
@@ -28,12 +29,6 @@ services:
       MYSQL_PASSWORD: "newpassword"
     volumes:
       - db_data:/var/lib/mysql
-    networks:
-      - ghost_network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "--silent"]
-      interval: 30s
-      retries: 3
 
 volumes:
   ghost_content:
