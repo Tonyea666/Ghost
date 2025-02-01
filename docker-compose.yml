@@ -6,36 +6,30 @@ services:
     container_name: ghost_app
     restart: always
     depends_on:
-      db:
-        condition: service_healthy
+      - db
+    ports:
+      - "2368:2368"
     environment:
       url: "https://34.89.34.201"
       database_client: "mysql"
-      database_connection_host: "localhost"
-      database_connection_user: "ghost_user"
-      database_connection_password: "YourStrongPassword"
+      database_connection_host: "db"
+      database_connection_user: "root"  # Changed to root
+      database_connection_password: "YourStrongPassword"  # Correct password
       database_connection_database: "ghost"
     volumes:
       - ghost_content:/var/lib/ghost/content
-    network_mode: "host"
 
   db:
     image: mysql:8.0
     container_name: ghost_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: "YourStrongPassword"
+      MYSQL_ROOT_PASSWORD: "YourStrongPassword"  # root password is defined
       MYSQL_DATABASE: "ghost"
-      MYSQL_USER: "ghost_user"
-      MYSQL_PASSWORD: "YourStrongPassword"
+      MYSQL_USER: "ghost_user"  # Keep ghost user for other connections
+      MYSQL_PASSWORD: "newpassword"  # Password for the ghost_user
     volumes:
       - db_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "--silent"]
-      interval: 30s
-      retries: 5
-      start_period: 10s
-      timeout: 10s
 
 volumes:
   ghost_content:
