@@ -13,7 +13,7 @@ services:
     environment:
       url: "https://34.89.34.201"
       database_client: "mysql"
-      database_connection_host: "db"
+      database_connection_host: "127.0.0.1"
       database_connection_user: "ghost_user"
       database_connection_password: "YourStrongPassword"
       database_connection_database: "ghost"
