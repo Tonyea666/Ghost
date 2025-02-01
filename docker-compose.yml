@@ -4,7 +4,6 @@ services:
   ghost:
     image: ghost:latest
     container_name: ghost_app
-    restart: always
     depends_on:
       - db
     network_mode: host  # Use host network mode
@@ -21,7 +20,6 @@ services:
   db:
     image: mysql:8.0
     container_name: ghost_db
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "YourStrongPassword"
       MYSQL_DATABASE: "ghost"
@@ -37,7 +35,3 @@ volumes:
   db_data:
     external: true
     name: ghost-docker_db_data
-
-networks:
-  ghost_network:
-    driver: bridge
