@@ -5,7 +5,7 @@ services:
     image: ghost:latest
     container_name: ghost_app
     depends_on:
-      - db
+      - ghost_db
     network_mode: host  # Use host network mode
     environment:
       url: "https://34.89.34.201"
