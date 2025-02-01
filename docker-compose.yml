@@ -4,7 +4,6 @@ services:
   ghost:
     image: ghost:latest
     container_name: ghost_app
-    restart: no  # Do not automatically restart
     depends_on:
       - db
     environment:
@@ -22,7 +21,6 @@ services:
   db:
     image: mysql:8.0
     container_name: ghost_db
-    restart: no  # Do not automatically restart
     environment:
       MYSQL_ROOT_PASSWORD: "YourStrongPassword"
       MYSQL_DATABASE: "ghost"
