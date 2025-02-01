@@ -7,7 +7,6 @@ services:
     restart: always
     depends_on:
       - db
-        condition: service_healthy
     ports:
       - "2368:2368"
     environment:
