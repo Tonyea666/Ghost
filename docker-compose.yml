@@ -19,6 +19,7 @@ services:
       database_connection_database: "ghost"
     volumes:
       - ghost_content:/var/lib/ghost/content
+    network_mode: "host"
 
   db:
     image: mysql:8.0
