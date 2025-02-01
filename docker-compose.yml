@@ -7,8 +7,7 @@ services:
     restart: always
     depends_on:
       - db
-    ports:
-      - "2368:2368"
+    network_mode: host
     environment:
       url: "https://34.89.34.201"
       database_client: "mysql"
