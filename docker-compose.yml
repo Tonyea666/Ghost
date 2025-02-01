@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   ghost_db:
     image: mysql:8.0
@@ -8,23 +6,15 @@ services:
       MYSQL_DATABASE: ghost
       MYSQL_USER: ghost_user
       MYSQL_PASSWORD: newpassword
-    volumes:
-      - ghost-docker_db_data:/var/lib/mysql
     networks:
       - ghost-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "--host=localhost", "--user=root", "--password=yourpassword"]
-      interval: 30s
-      retries: 5
-      start_period: 30s
-      timeout: 30s
 
   ghost:
     image: ghost:latest
     environment:
       url: http://localhost:2368
       database_client: mysql
-      database_connection_host: ghost_db
+      database_connection_host: ghost_db   # This should be the service name, not 'localhost'
       database_connection_user: ghost_user
       database_connection_password: newpassword
       database_connection_database: ghost
@@ -37,6 +27,3 @@ services:
 
 networks:
   ghost-network:
-
-volumes:
-  ghost-docker_db_data:
