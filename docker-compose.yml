@@ -31,9 +31,9 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-    test: ["CMD", "mysqladmin", "ping", "--silent"]
-    interval: 30s
-    retries: 3
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 30s
+      retries: 3
 
 volumes:
   ghost_content:
