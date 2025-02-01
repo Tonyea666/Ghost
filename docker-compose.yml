@@ -14,8 +14,7 @@ services:
       database_connection_user: "ghost_user"
       database_connection_password: "newpassword"
       database_connection_database: "ghost"
-      database_connection_root_user: "root"  # Add root user
-      database_connection_root_password: "YourStrongPassword"  # Add root password
+     
     volumes:
       - ghost_content:/var/lib/ghost/content
 
