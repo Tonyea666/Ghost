@@ -12,6 +12,12 @@ services:
       - ghost-docker_db_data:/var/lib/mysql
     networks:
       - ghost-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--host=localhost", "--user=root", "--password=yourpassword"]
+      interval: 30s
+      retries: 5
+      start_period: 30s
+      timeout: 30s
 
   ghost:
     image: ghost:latest
