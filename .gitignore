@@ -1,0 +1,5 @@
+*.log
+*.bak
+*.swp
+db_data/
+ghost_content/
