@@ -10,7 +10,7 @@ services:
     environment:
       url: "https://34.89.34.201"
       database_client: "mysql"
-      database_connection_host: "localhost"  # Use localhost since host networking is enabled
+      database_connection_host: "ghost_db"  
       database_connection_user: "ghost_user"
       database_connection_password: "newpassword"
       database_connection_database: "ghost"
