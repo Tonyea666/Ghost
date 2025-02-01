@@ -4,31 +4,34 @@ services:
   ghost:
     image: ghost:latest
     container_name: ghost_app
-    restart: always
+    restart: no  # Do not automatically restart
     depends_on:
       - db
-    network_mode: host
     environment:
       url: "https://34.89.34.201"
       database_client: "mysql"
       database_connection_host: "db"
-      database_connection_user: "ghost_user"  # Use ghost_user only
-      database_connection_password: "newpassword"  # Password for ghost_user
+      database_connection_user: "ghost_user"
+      database_connection_password: "newpassword"
       database_connection_database: "ghost"
     volumes:
       - ghost_content:/var/lib/ghost/content
+    networks:
+      - ghost_network
 
   db:
     image: mysql:8.0
     container_name: ghost_db
-    restart: always
+    restart: no  # Do not automatically restart
     environment:
-      MYSQL_ROOT_PASSWORD: "YourStrongPassword"  # Root password is still required for MySQL container to function
+      MYSQL_ROOT_PASSWORD: "YourStrongPassword"
       MYSQL_DATABASE: "ghost"
-      MYSQL_USER: "ghost_user"  # Create ghost_user for app-specific DB access
-      MYSQL_PASSWORD: "newpassword"  # Password for ghost_user
+      MYSQL_USER: "ghost_user"
+      MYSQL_PASSWORD: "newpassword"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - ghost_network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "--silent"]
       interval: 30s
