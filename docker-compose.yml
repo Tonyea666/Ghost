@@ -1,39 +1,36 @@
-version: '3.8'
+version: '3'
 
 services:
+  ghost_db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: yourpassword
+      MYSQL_DATABASE: ghost
+      MYSQL_USER: ghost_user
+      MYSQL_PASSWORD: newpassword
+    volumes:
+      - ghost-docker_db_data:/var/lib/mysql
+    networks:
+      - ghost-network
+
   ghost:
     image: ghost:latest
-    container_name: ghost_app
+    environment:
+      url: http://localhost:2368
+      database_client: mysql
+      database_connection_host: ghost_db
+      database_connection_user: ghost_user
+      database_connection_password: newpassword
+      database_connection_database: ghost
+    ports:
+      - "2368:2368"
     depends_on:
       - ghost_db
-    network_mode: host  # Use host network mode
-    environment:
-      url: "https://34.89.34.201"
-      database_client: "mysql"
-      database_connection_host: "ghost_db"  
-      database_connection_user: "ghost_user"
-      database_connection_password: "newpassword"
-      database_connection_database: "ghost"
-      database_root_password: "YourStrongPassword"
-     
-    volumes:
-      - ghost_content:/var/lib/ghost/content
+    networks:
+      - ghost-network
 
-  db:
-    image: mysql:8.0
-    container_name: ghost_db
-    environment:
-      MYSQL_ROOT_PASSWORD: "YourStrongPassword"
-      MYSQL_DATABASE: "ghost"
-      MYSQL_USER: "ghost_user"
-      MYSQL_PASSWORD: "newpassword"
-    volumes:
-      - db_data:/var/lib/mysql
+networks:
+  ghost-network:
 
 volumes:
-  ghost_content:
-    external: true
-    name: ghost-docker_ghost_content
-  db_data:
-    external: true
-    name: ghost-docker_db_data
+  ghost-docker_db_data:
