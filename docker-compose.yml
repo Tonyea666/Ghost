@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  ghost:
+    image: ghost:latest
+    container_name: ghost_app
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "2368:2368"
+    environment:
+      url: "https://34.89.34.201"
+      database__client: "mysql"
+      database__connection__host: "db"
+      database__connection__user: "ghost_user"
+      database__connection__password: "YourStrongPassword"
+      database__connection__database: "ghost"
+    volumes:
+      - ghost_content:/var/lib/ghost/content
+
+  db:
+    image: mysql:8.0
+    container_name: ghost_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "YourStrongPassword"
+      MYSQL_DATABASE: "ghost"
+      MYSQL_USER: "ghost_user"
+      MYSQL_PASSWORD: "YourStrongPassword"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  ghost_content:
+  db_data:
+
