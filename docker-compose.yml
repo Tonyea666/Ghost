@@ -12,8 +12,8 @@ services:
       url: "https://34.89.34.201"
       database_client: "mysql"
       database_connection_host: "db"
-      database_connection_user: "root"  # Changed to root
-      database_connection_password: "YourStrongPassword"  # Correct password
+      database_connection_user: "ghost_user"  # Changed to ghost_user
+      database_connection_password: "newpassword"  # Ensure this matches the user password
       database_connection_database: "ghost"
     volumes:
       - ghost_content:/var/lib/ghost/content
@@ -23,12 +23,16 @@ services:
     container_name: ghost_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: "YourStrongPassword"  # root password is defined
+      MYSQL_ROOT_PASSWORD: "YourStrongPassword"  # Root password
       MYSQL_DATABASE: "ghost"
-      MYSQL_USER: "ghost_user"  # Keep ghost user for other connections
-      MYSQL_PASSWORD: "newpassword"  # Password for the ghost_user
+      MYSQL_USER: "ghost_user"
+      MYSQL_PASSWORD: "newpassword"  # Password for ghost_user
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 30s
+      retries: 3
 
 volumes:
   ghost_content:
