@@ -6,7 +6,8 @@ services:
     container_name: ghost_app
     restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "2368:2368"
     environment:
@@ -33,7 +34,9 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "--silent"]
       interval: 30s
-      retries: 3
+      retries: 5
+      start_period: 10s
+      timeout: 10s
 
 volumes:
   ghost_content:
